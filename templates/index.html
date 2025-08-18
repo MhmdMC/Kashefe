@@ -1,104 +1,121 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نموذج النشاط</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نموذج النشاط</title>
 
-  <!-- Choices.js CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
-  <style>
-      body {
-          font-family: sans-serif;
-          background: #fafafa;
-          margin: 0;
-          padding: 0;
-          color: #333;
-      }
-      .container {
-          max-width: 700px;
-          margin: auto;
-          background: white;
-          padding: 20px;
-          border-radius: 8px;
-          box-shadow: 0 0 15px rgba(0,0,0,0.05);
-          margin-top: 30px;
-      }
-      h1 {
-          text-align: center;
-          color: #444;
-          margin-bottom: 20px;
-      }
-      label {
-          display: block;
-          margin-top: 12px;
-          font-weight: bold;
-      }
-      input, select, button {
-          width: 100%;
-          padding: 8px;
-          margin-top: 4px;
-          border-radius: 5px;
-          border: 1px solid #ccc;
-          font-size: 16px;
-      }
-      button {
-          cursor: pointer;
-      }
-      .paragraph-item {
-          display: flex;
-          gap: 5px;
-          margin-top: 5px;
-      }
-      .paragraph-item input {
-          flex: 1;
-      }
-      .paragraph-item button {
-          flex: 0 0 auto;
-          padding: 5px 10px;
-      }
-      .add-btn {
-          background: #007bff;
-          color: white;
-          border: none;
-      }
-      .remove-btn {
-          background: #dc3545;
-          color: white;
-          border: none;
-          width: 30px;
-      }
-      .submit-btn {
-          background: #28a745;
-          color: white;
-          margin-top: 15px;
-          border: none;
-      }
+<!-- Choices.js CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+<style>
+    body {
+        font-family: sans-serif;
+        background: #fafafa;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    .container {
+        max-width: 700px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        margin-top: 30px;
+    }
+    h1 {
+        text-align: center;
+        color: #444;
+        margin-bottom: 20px;
+    }
+    label {
+        display: block;
+        margin-top: 12px;
+        font-weight: bold;
+    }
+    input, select, button {
+        width: 100%;
+        padding: 8px;
+        margin-top: 4px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+    button {
+        cursor: pointer;
+    }
+    .paragraph-item {
+        display: flex;
+        gap: 5px;
+        margin-top: 5px;
+    }
+    .paragraph-item input {
+        flex: 1;
+    }
+    .paragraph-item button {
+        flex: 0 0 auto;
+        padding: 5px 10px;
+    }
+    .add-btn {
+        background: #007bff;
+        color: white;
+        border: none;
+    }
+    .remove-btn {
+        background: #dc3545;
+        color: white;
+        border: none;
+        width: 30px;
+    }
+    .submit-btn {
+        background: #28a745;
+        color: white;
+        margin-top: 15px;
+        border: none;
+    }
 
-      /* Fix dropdown arrow overlap in RTL */
+    /* Fix dropdown arrow overlap in RTL */
     .choices[data-type*="select-one"]::after {
-        left: 11px;       /* move arrow to the left */
-        right: auto;      /* disable default right */
+        left: 11px;
+        right: auto;
     }
     .choices[data-type*="select-one"] .choices__inner {
-        padding-left: 2.5em;  /* add padding so text doesn't hit the arrow */
+        padding-left: 2.5em;
         padding-right: 0.75em;
     }
 
-  </style>
+    /* Hidden inputs exactly behind selects */
+    .hidden-input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        pointer-events: none;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    .select-wrapper {
+        position: relative;
+    }
+</style>
 </head>
 <body>
 
 <div class="container">
-  <h1>محضر نشاط</h1>
+<h1>محضر نشاط</h1>
 
-  <form method="POST">
-      <label>التاريخ:</label>
-      <input type="date" name="date" value="{{ today }}" required>
+<form method="POST">
+    <label>التاريخ:</label>
+    <input type="date" name="date" value="{{ today }}" required>
 
-      <label>الفرقة:</label>
-      <select id="group" name="group" required>
-          <option value="">اختر</option>
+    <label>الفرقة:</label>
+    <div class="select-wrapper">
+        <input type="text" class="hidden-input" id="group_hidden" required>
+        <select id="group" name="group">
+            <option value="">اختر</option>
             <option>فوج الامام الباقر (ع)/ تفاحتا</option>
             <option>فوج الامام الباقر (ع)/ تفاحتا/مرحلة البراعم</option>
             <option>فوج الامام الباقر (ع)/ تفاحتا/مرحلة الاشبال</option>
@@ -110,11 +127,15 @@
             <option>فوج الامام الباقر (ع)/ تفاحتا/امانة الموارد البشرية</option>
             <option>فوج الامام الباقر (ع)/ تفاحتا/امانة الاعلام</option>
             <option>فوج الامام الباقر (ع)/ تفاحتا/فرقة الخدمة المجتمعية</option>
-      </select>
+        </select>
+        
+    </div>
 
-      <label>نوع النشاط:</label>
-      <select id="activity_type" name="activity_type" required>
-          <option value="">اختر</option>
+    <label>نوع النشاط:</label>
+    <div class="select-wrapper">
+        <input type="text" class="hidden-input" id="activity_type_hidden" required>
+        <select id="activity_type" name="activity_type">
+            <option value="">اختر</option>
             <option>برنامج لصلاة الجماعة</option>
             <option>إذاعة بيان ودعوة</option>
             <option>إعداد مادة إعلامية</option>
@@ -800,33 +821,28 @@
             <option>تدريب للفرقة الفنية</option>
             <option>تنظيم نشاط صناعة المجسمات</option>
             <option>تنظيم نشاط للرسومات</option>
-      </select>
+        </select>
+        
+    </div>
 
-      <label>المكان:</label>
-      <input type="text" name="place" required>
-
-      <label>وقت التنفيذ:</label>
-      <select id="time" name="time" required>
-          <option value="">اختر</option>
+    <label>وقت التنفيذ:</label>
+    <div class="select-wrapper">
+        <input type="text" class="hidden-input" id="time_hidden" required>
+        <select id="time" name="time">
+            <option value="">اختر</option>
             <option>قبل الظهر</option>
             <option>بعد الظهر</option>
             <option>مساءً</option>
             <option>فجراً</option>
             <option>كامل اليوم</option>
-      </select>
+        </select>
+    </div>
 
-      <label>عدد القادة:</label>
-      <input type="number" name="leaders" required min="0">
-
-      <label>عدد الكشفيين:</label>
-      <input type="number" name="scouts" required min="0">
-
-      <label>عدد غير الكشفيين (اختياري):</label>
-      <input type="number" name="non_scouts" min="0">
-
-      <label>مناسبة النشاط (اختياري):</label>
-      <select id="occasion" name="occasion">
-          <option value="">لا يوجد</option>
+    <label>مناسبة النشاط (اختياري):</label>
+    <div class="select-wrapper">
+        <input type="text" class="hidden-input" id="occasion_hidden" required>
+        <select id="occasion" name="occasion">
+            <option value="">لا يوجد</option>
             <option>ولادة الرسول(ص) وحفيده الصادق(ع) (يوم القائد)</option>
             <option>شهادة الرسول(ص) وحفيديه المجتبى(ع) والرضا(ع)</option>
             <option>ولادة أمير المؤمنين(ع)</option>
@@ -885,42 +901,78 @@
             <option>وفاة أم البنين (ع)</option>
             <option>عيد الجيش</option>
             <option>ذكرى شهادة الامين العام سيد شهداء الأمة</option>
-      </select>
+        </select>
+    </div>
 
-      <label>الفقرات المنفذة:</label>
-      <div id="paragraphs"></div>
-      <button type="button" class="add-btn" onclick="addParagraph()">+ إضافة فقرة</button>
+    <label>المكان:</label>
+    <input type="text" name="place" required>
 
-      <button type="submit" class="submit-btn">إرسال</button>
-  </form>
+    <label>عدد القادة:</label>
+    <input type="number" name="leaders" required min="0">
+
+    <label>عدد الكشفيين:</label>
+    <input type="number" name="scouts" required min="0">
+
+    <label>عدد غير الكشفيين (اختياري):</label>
+    <input type="number" name="non_scouts" min="0">
+
+    <label>الفقرات المنفذة:</label>
+    <div id="paragraphs"></div>
+    <button type="button" class="add-btn" onclick="addParagraph()">+ إضافة فقرة</button>
+
+    <button type="submit" class="submit-btn">إرسال</button>
+</form>
 </div>
 
 <!-- Choices.js -->
 <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 <script>
-  // Enable searchable selects
-  new Choices("#group", { searchEnabled: true, placeholder: true, searchPlaceholderValue: "ابحث..." });
-  new Choices("#activity_type", { searchEnabled: true });
-  new Choices("#time", { searchEnabled: true });
-  new Choices("#occasion", { searchEnabled: true });
+document.addEventListener("DOMContentLoaded", function() {
+    // Initialize Choices.js
+    const groupChoice = new Choices("#group", { searchEnabled: true, placeholder: true, searchPlaceholderValue: "ابحث..." });
+    const activityChoice = new Choices("#activity_type", { searchEnabled: true });
+    const timeChoice = new Choices("#time", { searchEnabled: true });
+    const occasionChoice = new Choices("#occasion", { searchEnabled: true });
 
-  // Dynamic paragraphs
-  function addParagraph(value = "") {
-      const container = document.getElementById("paragraphs");
-      const div = document.createElement("div");
-      div.className = "paragraph-item";
-      div.innerHTML = `
-          <input type="text" name="paragraphs[]" value="${value}" required>
-          <button type="button" class="remove-btn" onclick="removeParagraph(this)">×</button>
-      `;
-      container.appendChild(div);
-  }
-  function removeParagraph(btn) {
-      btn.parentElement.remove();
-  }
-  window.onload = function() {
-      addParagraph(); // Start with one
-  }
+    // Hidden inputs
+    const groupHidden = document.getElementById("group_hidden");
+    const activityHidden = document.getElementById("activity_type_hidden");
+    const timeHidden = document.getElementById("time_hidden");
+    const occasionHidden = document.getElementById("occasion_hidden");
+
+    // Sync values
+    const syncHidden = (choice, hidden) => {
+        choice.passedElement.element.addEventListener("change", () => {
+            hidden.value = choice.getValue(true) || "";
+        });
+        hidden.value = choice.getValue(true) || "";
+    }
+
+    syncHidden(groupChoice, groupHidden);
+    syncHidden(activityChoice, activityHidden);
+    syncHidden(timeChoice, timeHidden);
+    syncHidden(occasionChoice, occasionHidden);
+
+    // Paragraphs
+    function addParagraph(value = "") {
+        const container = document.getElementById("paragraphs");
+        const div = document.createElement("div");
+        div.className = "paragraph-item";
+        div.innerHTML = `
+            <input type="text" name="paragraphs[]" value="${value}" required>
+            <button type="button" class="remove-btn" onclick="removeParagraph(this)">×</button>
+        `;
+        container.appendChild(div);
+    }
+    function removeParagraph(btn) {
+        btn.parentElement.remove();
+    }
+    window.addParagraph = addParagraph;
+    window.removeParagraph = removeParagraph;
+
+    // Start with one paragraph
+    addParagraph();
+});
 </script>
 
 </body>
