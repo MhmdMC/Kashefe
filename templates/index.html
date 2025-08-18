@@ -101,7 +101,7 @@
 
     .select-wrapper {
     position: relative;
-    width: 102.6%; /* ensure full width */
+    width: 102.5%; /* ensure full width */
     }
 
     .select-wrapper .choices {
@@ -147,6 +147,7 @@
     <div class="select-wrapper">
         <input type="text" class="hidden-input" id="activity_type_hidden" required>
         <select id="activity_type" name="activity_type">
+            <option value="">اختر</option>
             <option>محاضرة</option>
             <option>تامين إحتياجات طبية</option>
             <option>حضور سيرك</option>
@@ -516,6 +517,86 @@
             <option>إعداد مادة إعلامية</option>
             <option>تنظيم حفل إنشادي خاص بالفرقة</option>
             <option>توضيب حصص تموينية</option>
+        </select>
+        
+    </div>
+
+    <label>وقت التنفيذ:</label>
+    <div class="select-wrapper">
+        <input type="text" class="hidden-input" id="time_hidden" required>
+        <select id="time" name="time">
+            <option value="">اختر</option>
+            <option>قبل الظهر</option>
+            <option>بعد الظهر</option>
+            <option>مساءً</option>
+            <option>فجراً</option>
+            <option>كامل اليوم</option>
+        </select>
+    </div>
+
+    <label>مناسبة النشاط (اختياري):</label>
+    <div class="select-wrapper">
+        <input type="text" class="hidden-input" id="occasion_hidden" required>
+        <select id="occasion" name="occasion">
+            <option value="">لا يوجد</option>
+            <option>ولادة الرسول(ص) وحفيده الصادق(ع) (يوم القائد)</option>
+            <option>شهادة الرسول(ص) وحفيديه المجتبى(ع) والرضا(ع)</option>
+            <option>ولادة أمير المؤمنين(ع)</option>
+            <option>شهادة أمير المؤمنين(ع)</option>
+            <option>ولادة السيدة الزهراء(ع) والإمام الخميني(قده) (يوم القائدة)</option>
+            <option>شهادة السيدة الزهراء(ع)</option>
+            <option>ولادة الإمام المجتبى(ع)</option>
+            <option>ولادة الإمامين الحسين(ع) والسجاد(ع) وأبو الفضل العباس(ع)</option>
+            <option>مناسبة الإحياء العاشورائي</option>
+            <option>شهادة الإمام السجاد(ع)</option>
+            <option>ولادة الإمامين الباقر(ع) والهادي(ع)</option>
+            <option>شهادة الإمام الباقر(ع)</option>
+            <option>شهادة الإمام الصادق(ع)</option>
+            <option>ولادة الإمام الكاظم(ع)</option>
+            <option>شهادة الإمام الكاظم(ع)</option>
+            <option>ولادة الإمام الرضا(ع)</option>
+            <option>ولادة الإمام الجواد(ع)</option>
+            <option>شهادة الإمام الجواد(ع)</option>
+            <option>شهادة الإمام الهادي(ع)</option>
+            <option>ولادة الإمام العسكري(ع)</option>
+            <option>شهادة الإمام العسكري(ع)</option>
+            <option>ولادة الإمام المهدي(عج) (عيد الجمعية)</option>
+            <option>ولادة السيدة زينب(ع) (يوم الدليلة)</option>
+            <option>وفاة السيدة زينب(ع)</option>
+            <option>أربعين الإمام الحسين(ع)</option>
+            <option>ولادة السيدة فاطمة المعصومة</option>
+            <option>شهادة السيدة فاطمة المعصومة</option>
+            <option>ولادة علي الأكبر (ع) - يوم الشباب</option>
+            <option>المبعث النبوي الشريف</option>
+            <option>إحياء شهر رمضان</option>
+            <option>ليالي القدر</option>
+            <option>يوم القدس العالمي</option>
+            <option>عيد الفطر السعيد</option>
+            <option>أسبوع الأسرة</option>
+            <option>عيد الأضحى المبارك</option>
+            <option>عيد الغدير الأغر (يوم الجوال)</option>
+            <option>ولادة النبي عيسى(ع)</option>
+            <option>رأس السنة الميلادية</option>
+            <option>يوم المقاومة العالمي ( 3 ك2 )</option>
+            <option>ذكرى انتصار الثورة الاسلامية</option>
+            <option>ذكرى الشهداء القادة (أسبوع المقاومة)</option>
+            <option>يوم الشهيد</option>
+            <option>عيد المقاومة والتحرير (25 أيار)</option>
+            <option>انتصار تموز 2006</option>
+            <option>عيد التحرير الثاني ( 28 آب )</option>
+            <option>عدوان نيسان 1996</option>
+            <option>عدوان تموز 1993</option>
+            <option>عيد الأسرى والمحرَّرين</option>
+            <option>وفاة الإمام الخميني(قده)</option>
+            <option>عيد الأم</option>
+            <option>عيد الطفل</option>
+            <option>عيد المعلم</option>
+            <option>عيد العمال</option>
+            <option>عيد الشهداء</option>
+            <option>عيد الاستقلال</option>
+            <option>وفاة أم البنين (ع)</option>
+            <option>عيد الجيش</option>
+            <option>ذكرى شهادة الامين العام سيد شهداء الأمة</option>
         </select>
     </div>
 
