@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج النشاط</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #fafafa;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            margin-top: 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        button {
+            cursor: pointer;
+        }
+        .paragraph-item {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        .paragraph-item input {
+            flex: 1;
+        }
+        .paragraph-item button {
+            flex: 0 0 auto;
+            padding: 5px 10px;
+        }
+        .success {
+            background: #e0f9e0;
+            padding: 10px;
+            border: 1px solid #b2d8b2;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            color: #2e662e;
+        }
+        .error {
+            background: #fde0e0;
+            padding: 10px;
+            border: 1px solid #d8b2b2;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            color: #662e2e;
+        }
+        .add-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+        }
+        .move-btn {
+            background: #ccc;
+            border: none;
+        }
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+        }
+        .submit-btn {
+            background: #28a745;
+            color: white;
+            margin-top: 15px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>نموذج النشاط</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="{{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <form method="POST">
+        <label>التاريخ:</label>
+        <input type="date" name="date" value="{{ today }}">
+
+        <label>الفرقة:</label>
+        <select name="group" required>
+            <option value="">اختر</option>
+            <option>فرقة 1</option>
+            <option>فرقة 2</option>
+            <option>فرقة 3</option>
+        </select>
+
+        <label>نوع النشاط:</label>
+        <select name="activity_type" required>
+            <option value="">اختر</option>
+            <option>تدريب</option>
+            <option>رحلة</option>
+            <option>خدمة</option>
+        </select>
+
+        <label>المكان:</label>
+        <input type="text" name="place" required>
+
+        <label>وقت التنفيذ:</label>
+        <select name="time" required>
+            <option value="">اختر</option>
+            <option>صباحاً</option>
+            <option>ظهراً</option>
+            <option>مساءً</option>
+        </select>
+
+        <label>عدد القادة:</label>
+        <input type="number" name="leaders" required min="0">
+
+        <label>عدد الكشفيين:</label>
+        <input type="number" name="scouts" required min="0">
+
+        <label>عدد غير الكشفيين (اختياري):</label>
+        <input type="number" name="non_scouts" min="0">
+
+        <label>مناسبة النشاط (اختياري):</label>
+        <select name="occasion">
+            <option value="">لا يوجد</option>
+            <option>عيد</option>
+            <option>ذكرى</option>
+            <option>مناسبة خاصة</option>
+        </select>
+
+        <label>الفقرات المنفذة:</label>
+        <div id="paragraphs"></div>
+        <button type="button" class="add-btn" onclick="addParagraph()">+ إضافة فقرة</button>
+
+        <button type="submit" class="submit-btn">إرسال</button>
+    </form>
+</div>
+
+<script>
+function addParagraph(value = "") {
+    const container = document.getElementById("paragraphs");
+    const div = document.createElement("div");
+    div.className = "paragraph-item";
+    div.innerHTML = `
+        <input type="text" name="paragraphs[]" value="${value}" required>
+        <button type="button" class="move-btn" onclick="moveUp(this)">↑</button>
+        <button type="button" class="move-btn" onclick="moveDown(this)">↓</button>
+        <button type="button" class="remove-btn" onclick="removeParagraph(this)">×</button>
+    `;
+    container.appendChild(div);
+}
+
+function removeParagraph(btn) {
+    btn.parentElement.remove();
+}
+
+function moveUp(btn) {
+    const item = btn.parentElement;
+    if (item.previousElementSibling) {
+        item.parentElement.insertBefore(item, item.previousElementSibling);
+    }
+}
+
+function moveDown(btn) {
+    const item = btn.parentElement;
+    if (item.nextElementSibling) {
+        item.parentElement.insertBefore(item.nextElementSibling, item);
+    }
+}
+
+window.onload = function() {
+    addParagraph(); // Start with one empty paragraph
+}
+</script>
+
+</body>
+</html>
