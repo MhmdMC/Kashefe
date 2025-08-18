@@ -1,117 +1,104 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نموذج النشاط</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            background: #fafafa;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-        .container {
-            max-width: 700px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.05);
-            margin-top: 30px;
-        }
-        h1 {
-            text-align: center;
-            color: #444;
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-top: 12px;
-            font-weight: bold;
-        }
-        input, button {
-            width: 100%;
-            padding: 8px;
-            margin-top: 4px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-        }
-        button {
-            cursor: pointer;
-        }
-        .paragraph-item {
-            display: flex;
-            gap: 5px;
-            margin-top: 5px;
-        }
-        .paragraph-item input {
-            flex: 1;
-        }
-        .paragraph-item button {
-            flex: 0 0 auto;
-            padding: 5px 10px;
-        }
-        .success {
-            background: #e0f9e0;
-            padding: 10px;
-            border: 1px solid #b2d8b2;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            color: #2e662e;
-        }
-        .error {
-            background: #fde0e0;
-            padding: 10px;
-            border: 1px solid #d8b2b2;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            color: #662e2e;
-        }
-        .add-btn {
-            background: #007bff;
-            color: white;
-            border: none;
-        }
-        .move-btn {
-            background: #ccc;
-            border: none;
-        }
-        .remove-btn {
-            background: #dc3545;
-            color: white;
-            border: none;
-            width: 30px;
-        }
-        .submit-btn {
-            background: #28a745;
-            color: white;
-            margin-top: 15px;
-            border: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نموذج النشاط</title>
+
+  <!-- Choices.js CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+  <style>
+      body {
+          font-family: sans-serif;
+          background: #fafafa;
+          margin: 0;
+          padding: 0;
+          color: #333;
+      }
+      .container {
+          max-width: 700px;
+          margin: auto;
+          background: white;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 0 15px rgba(0,0,0,0.05);
+          margin-top: 30px;
+      }
+      h1 {
+          text-align: center;
+          color: #444;
+          margin-bottom: 20px;
+      }
+      label {
+          display: block;
+          margin-top: 12px;
+          font-weight: bold;
+      }
+      input, select, button {
+          width: 100%;
+          padding: 8px;
+          margin-top: 4px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+          font-size: 16px;
+      }
+      button {
+          cursor: pointer;
+      }
+      .paragraph-item {
+          display: flex;
+          gap: 5px;
+          margin-top: 5px;
+      }
+      .paragraph-item input {
+          flex: 1;
+      }
+      .paragraph-item button {
+          flex: 0 0 auto;
+          padding: 5px 10px;
+      }
+      .add-btn {
+          background: #007bff;
+          color: white;
+          border: none;
+      }
+      .remove-btn {
+          background: #dc3545;
+          color: white;
+          border: none;
+          width: 30px;
+      }
+      .submit-btn {
+          background: #28a745;
+          color: white;
+          margin-top: 15px;
+          border: none;
+      }
+
+      /* Fix dropdown arrow overlap in RTL */
+    .choices[data-type*="select-one"]::after {
+        left: 11px;       /* move arrow to the left */
+        right: auto;      /* disable default right */
+    }
+    .choices[data-type*="select-one"] .choices__inner {
+        padding-left: 2.5em;  /* add padding so text doesn't hit the arrow */
+        padding-right: 0.75em;
+    }
+
+  </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>محضر نشاط</h1>
+  <h1>محضر نشاط</h1>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% for category, message in messages %}
-        <div class="{{ category }}">{{ message }}</div>
-      {% endfor %}
-    {% endwith %}
+  <form method="POST">
+      <label>التاريخ:</label>
+      <input type="date" name="date" value="{{ today }}" required>
 
-    <form method="POST">
-        <label>التاريخ:</label>
-        <input type="date" name="date" value="{{ today }}">
-
-        <label>الفرقة:</label>
-        <input list="group" id="eventInput" name="group">
-        <datalist id="group" required>
-            <option value="">اختر</option>
+      <label>الفرقة:</label>
+      <select id="group" name="group" required>
+          <option value="">اختر</option>
             <option>فوج الامام الباقر (ع)/ تفاحتا</option>
             <option>فوج الامام الباقر (ع)/ تفاحتا/مرحلة البراعم</option>
             <option>فوج الامام الباقر (ع)/ تفاحتا/مرحلة الاشبال</option>
@@ -123,12 +110,11 @@
             <option>فوج الامام الباقر (ع)/ تفاحتا/امانة الموارد البشرية</option>
             <option>فوج الامام الباقر (ع)/ تفاحتا/امانة الاعلام</option>
             <option>فوج الامام الباقر (ع)/ تفاحتا/فرقة الخدمة المجتمعية</option>
-        </datalist>
+      </select>
 
-        <label>نوع النشاط:</label>
-        <input list="activity_type" id="eventInput" name="activity_type">
-        <datalist id="activity_type" required>
-            <option value="">اختر</option>
+      <label>نوع النشاط:</label>
+      <select id="activity_type" name="activity_type" required>
+          <option value="">اختر</option>
             <option>برنامج لصلاة الجماعة</option>
             <option>إذاعة بيان ودعوة</option>
             <option>إعداد مادة إعلامية</option>
@@ -814,35 +800,33 @@
             <option>تدريب للفرقة الفنية</option>
             <option>تنظيم نشاط صناعة المجسمات</option>
             <option>تنظيم نشاط للرسومات</option>
-        </datalist>
+      </select>
 
-        <label>المكان:</label>
-        <input type="text" name="place" required>
+      <label>المكان:</label>
+      <input type="text" name="place" required>
 
-        <label>وقت التنفيذ:</label>
-        <input list="time" id="eventInput" name="time">
-        <datalist id="time" required>
-            <option value="">اختر</option>
+      <label>وقت التنفيذ:</label>
+      <select id="time" name="time" required>
+          <option value="">اختر</option>
             <option>قبل الظهر</option>
             <option>بعد الظهر</option>
             <option>مساءً</option>
             <option>فجراً</option>
             <option>كامل اليوم</option>
-        </datalist>
+      </select>
 
-        <label>عدد القادة:</label>
-        <input type="number" name="leaders" required min="0">
+      <label>عدد القادة:</label>
+      <input type="number" name="leaders" required min="0">
 
-        <label>عدد الكشفيين:</label>
-        <input type="number" name="scouts" required min="0">
+      <label>عدد الكشفيين:</label>
+      <input type="number" name="scouts" required min="0">
 
-        <label>عدد غير الكشفيين (اختياري):</label>
-        <input type="number" name="non_scouts" min="0">
+      <label>عدد غير الكشفيين (اختياري):</label>
+      <input type="number" name="non_scouts" min="0">
 
-        <label>مناسبة النشاط (اختياري):</label>
-        <input list="occasion" id="eventInput"  name="occasion">
-        <datalist id="occasion">
-            <option value="">لا يوجد</option>
+      <label>مناسبة النشاط (اختياري):</label>
+      <select id="occasion" name="occasion">
+          <option value="">لا يوجد</option>
             <option>ولادة الرسول(ص) وحفيده الصادق(ع) (يوم القائد)</option>
             <option>شهادة الرسول(ص) وحفيديه المجتبى(ع) والرضا(ع)</option>
             <option>ولادة أمير المؤمنين(ع)</option>
@@ -901,49 +885,42 @@
             <option>وفاة أم البنين (ع)</option>
             <option>عيد الجيش</option>
             <option>ذكرى شهادة الامين العام سيد شهداء الأمة</option>
-        </datalist>
+      </select>
 
-        <label>الفقرات المنفذة:</label>
-        <div id="paragraphs"></div>
-        <button type="button" class="add-btn" onclick="addParagraph()">+ إضافة فقرة</button>
+      <label>الفقرات المنفذة:</label>
+      <div id="paragraphs"></div>
+      <button type="button" class="add-btn" onclick="addParagraph()">+ إضافة فقرة</button>
 
-        <button type="submit" class="submit-btn">إرسال</button>
-    </form>
+      <button type="submit" class="submit-btn">إرسال</button>
+  </form>
 </div>
 
+<!-- Choices.js -->
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 <script>
-function addParagraph(value = "") {
-    const container = document.getElementById("paragraphs");
-    const div = document.createElement("div");
-    div.className = "paragraph-item";
-    div.innerHTML = `
-        <input type="text" name="paragraphs[]" value="${value}" required>
-        <button type="button" class="remove-btn" onclick="removeParagraph(this)">×</button>
-    `;
-    container.appendChild(div);
-}
+  // Enable searchable selects
+  new Choices("#group", { searchEnabled: true, placeholder: true, searchPlaceholderValue: "ابحث..." });
+  new Choices("#activity_type", { searchEnabled: true });
+  new Choices("#time", { searchEnabled: true });
+  new Choices("#occasion", { searchEnabled: true });
 
-function removeParagraph(btn) {
-    btn.parentElement.remove();
-}
-
-function moveUp(btn) {
-    const item = btn.parentElement;
-    if (item.previousElementSibling) {
-        item.parentElement.insertBefore(item, item.previousElementSibling);
-    }
-}
-
-function moveDown(btn) {
-    const item = btn.parentElement;
-    if (item.nextElementSibling) {
-        item.parentElement.insertBefore(item.nextElementSibling, item);
-    }
-}
-
-window.onload = function() {
-    addParagraph(); // Start with one empty paragraph
-}
+  // Dynamic paragraphs
+  function addParagraph(value = "") {
+      const container = document.getElementById("paragraphs");
+      const div = document.createElement("div");
+      div.className = "paragraph-item";
+      div.innerHTML = `
+          <input type="text" name="paragraphs[]" value="${value}" required>
+          <button type="button" class="remove-btn" onclick="removeParagraph(this)">×</button>
+      `;
+      container.appendChild(div);
+  }
+  function removeParagraph(btn) {
+      btn.parentElement.remove();
+  }
+  window.onload = function() {
+      addParagraph(); // Start with one
+  }
 </script>
 
 </body>
