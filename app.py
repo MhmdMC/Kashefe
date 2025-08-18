@@ -7,7 +7,7 @@ app.secret_key = "secret123"
 
 # 🔹 Telegram config
 TELEGRAM_TOKEN = "8286847352:AAFcoQWxJ1JBM-dOv_SBQOPxtMBLggpwDW8"
-CHAT_ID = "6459523713"
+CHAT_ID = "-4835473371"
 
 def send_telegram(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
@@ -51,5 +51,4 @@ def index():
     return render_template("index.html", today=date.today().isoformat())
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
-
+    app.run(debug=True)
