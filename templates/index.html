@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نموذج النشاط</title>
@@ -34,7 +31,7 @@
             margin-top: 12px;
             font-weight: bold;
         }
-        input, select, button {
+        input, button {
             width: 100%;
             padding: 8px;
             margin-top: 4px;
@@ -112,7 +109,8 @@
         <input type="date" name="date" value="{{ today }}">
 
         <label>الفرقة:</label>
-        <select id="events" name="group" required>
+        <input list="group" id="eventInput" name="group">
+        <datalist id="group" required>
             <option value="">اختر</option>
             <option>فوج الامام الباقر (ع)/ تفاحتا</option>
             <option>فوج الامام الباقر (ع)/ تفاحتا/مرحلة البراعم</option>
@@ -125,10 +123,11 @@
             <option>فوج الامام الباقر (ع)/ تفاحتا/امانة الموارد البشرية</option>
             <option>فوج الامام الباقر (ع)/ تفاحتا/امانة الاعلام</option>
             <option>فوج الامام الباقر (ع)/ تفاحتا/فرقة الخدمة المجتمعية</option>
-        </select>
+        </datalist>
 
         <label>نوع النشاط:</label>
-        <select id="events" name="activity_type" required>
+        <input list="activity_type" id="eventInput" name="activity_type">
+        <datalist id="activity_type" required>
             <option value="">اختر</option>
             <option>برنامج لصلاة الجماعة</option>
             <option>إذاعة بيان ودعوة</option>
@@ -815,20 +814,21 @@
             <option>تدريب للفرقة الفنية</option>
             <option>تنظيم نشاط صناعة المجسمات</option>
             <option>تنظيم نشاط للرسومات</option>
-        </select>
+        </datalist>
 
         <label>المكان:</label>
         <input type="text" name="place" required>
 
         <label>وقت التنفيذ:</label>
-        <select id="events" name="time" required>
+        <input list="time" id="eventInput" name="time">
+        <datalist id="time" required>
             <option value="">اختر</option>
             <option>قبل الظهر</option>
             <option>بعد الظهر</option>
             <option>مساءً</option>
             <option>فجراً</option>
             <option>كامل اليوم</option>
-        </select>
+        </datalist>
 
         <label>عدد القادة:</label>
         <input type="number" name="leaders" required min="0">
@@ -840,7 +840,8 @@
         <input type="number" name="non_scouts" min="0">
 
         <label>مناسبة النشاط (اختياري):</label>
-        <select id="events" name="occasion">
+        <input list="occasion" id="eventInput"  name="occasion">
+        <datalist id="occasion">
             <option value="">لا يوجد</option>
             <option>ولادة الرسول(ص) وحفيده الصادق(ع) (يوم القائد)</option>
             <option>شهادة الرسول(ص) وحفيديه المجتبى(ع) والرضا(ع)</option>
@@ -900,7 +901,7 @@
             <option>وفاة أم البنين (ع)</option>
             <option>عيد الجيش</option>
             <option>ذكرى شهادة الامين العام سيد شهداء الأمة</option>
-        </select>
+        </datalist>
 
         <label>الفقرات المنفذة:</label>
         <div id="paragraphs"></div>
@@ -943,15 +944,6 @@ function moveDown(btn) {
 window.onload = function() {
     addParagraph(); // Start with one empty paragraph
 }
-
-$(document).ready(function() {
-    $('#events').select2({
-        placeholder: "اختر المناسبة",
-        allowClear: true
-    });
-});
-
-
 </script>
 
 </body>
