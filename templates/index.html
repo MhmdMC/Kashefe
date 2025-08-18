@@ -112,11 +112,23 @@
         box-sizing: border-box; /* include padding/border in width */
     }
 
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+
+
 </style>
 </head>
 <body>
 
 <div class="container">
+<div class="logo">
+</div>
+
 <h1>محضر نشاط</h1>
 
 <form method="POST">
@@ -618,6 +630,13 @@
 
     <button type="submit" class="submit-btn">إرسال</button>
 </form>
+<div class="footer">
+    فوج الإمام الباقر<sup>(ع)</sup> - تفاحتا - أمانة السّر
+</div>
+<div class="footer">
+    جميع الحقوق محفوظة © 2025
+</div>
+
 </div>
 
 <!-- Choices.js -->
@@ -625,10 +644,10 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     // Initialize Choices.js
-    const groupChoice = new Choices("#group", { searchEnabled: true, placeholder: true, searchPlaceholderValue: "ابحث..." });
-    const activityChoice = new Choices("#activity_type", { searchEnabled: true });
-    const timeChoice = new Choices("#time", { searchEnabled: true });
-    const occasionChoice = new Choices("#occasion", { searchEnabled: true });
+    const groupChoice = new Choices("#group", { searchEnabled: true, placeholder: true, searchPlaceholderValue: "ابحث...", shouldSort: false});
+    const activityChoice = new Choices("#activity_type", { searchEnabled: true, shouldSort: false });
+    const timeChoice = new Choices("#time", { searchEnabled: true, shouldSort: false });
+    const occasionChoice = new Choices("#occasion", { searchEnabled: true, shouldSort: false });
 
     // Hidden inputs
     const groupHidden = document.getElementById("group_hidden");
