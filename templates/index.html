@@ -42,6 +42,9 @@
         border: 1px solid #ccc;
         font-size: 16px;
     }
+    select {
+        width: 50%;
+    }
     button {
         cursor: pointer;
     }
@@ -81,7 +84,6 @@
         right: auto;
     }
     .choices[data-type*="select-one"] .choices__inner {
-        padding-left: 2.5em;
         padding-right: 0.75em;
     }
 
@@ -98,8 +100,18 @@
     }
 
     .select-wrapper {
-        position: relative;
+    position: relative;
+    width: 102.6%; /* ensure full width */
     }
+
+    .select-wrapper .choices {
+        width: 100% !important;
+    }
+
+    .select-wrapper .choices__inner {
+        box-sizing: border-box; /* include padding/border in width */
+    }
+
 </style>
 </head>
 <body>
