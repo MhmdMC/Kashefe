@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from datetime import date
+from datetime import datetime
+import pytz
 import requests
 
 app = Flask(__name__)
@@ -61,7 +62,10 @@ def index():
 
         return redirect(url_for("index"))
 
-    return render_template("index.html", today=date.today().isoformat())
+    # Use Lebanon local date (Asia/Beirut)
+    ttz = pytz.timezone("Asia/Beirut")
+    lebanon_time = datetime.now(ttz).date()
+    return render_template("index.html", today=lebanon_time)
 
 @app.route("/uptime", methods=["GET", "POST"])
 def uptime():
