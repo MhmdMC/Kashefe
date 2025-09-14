@@ -9,10 +9,16 @@ app.secret_key = "secret123"
 TELEGRAM_TOKEN = "8286847352:AAFcoQWxJ1JBM-dOv_SBQOPxtMBLggpwDW8"
 CHAT_ID = "-4835473371"
 
-def send_telegram(message):
+def send_telegram_msg(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     data = {"chat_id": CHAT_ID, "text": message, "parse_mode": "HTML"}
     requests.post(url, data=data)
+
+def send_telegram_file(message, photo):
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendPhoto"
+    data = {"chat_id": CHAT_ID, "caption": message, "parse_mode": "HTML"}
+    files = {"photo": photo}
+    requests.post(url, data=data, files=files)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -27,7 +33,8 @@ def index():
             "عدد الكشفيين": request.form.get("scouts"),
             "عدد غير الكشفيين": request.form.get("non_scouts"),
             "مناسبة النشاط": request.form.get("occasion") or "لا يوجد",
-            "الفقرات المنفذة": request.form.getlist("paragraphs[]")
+            "الفقرات المنفذة": request.form.getlist("paragraphs[]"),
+            "التكلفة": request.form.get("cost") or "0",
         }
 
         # Validation
@@ -44,8 +51,14 @@ def index():
             else:
                 msg += f"{k}: {v}\n"
 
-        send_telegram(msg)
-        flash("تم إرسال النموذج إلى تيليجرام بنجاح!", "success")
+        send_telegram_msg(msg)
+        
+        files = request.files.getlist("files[]")
+        if files and any(f.filename for f in files):
+            for file in files:
+                if file and file.filename:
+                    send_telegram_file(request.form.get("activity_type"), file)
+
         return redirect(url_for("index"))
 
     return render_template("index.html", today=date.today().isoformat())
