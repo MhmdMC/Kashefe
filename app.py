@@ -2,9 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from datetime import datetime
 import pytz
 import requests
+import os
 
 app = Flask(__name__)
-app.secret_key = "secret123"
+app.secret_key = os.environ.get("SECRET_KEY", "dev_secret")
 
 # 🔹 Telegram config
 TELEGRAM_TOKEN = "8286847352:AAFcoQWxJ1JBM-dOv_SBQOPxtMBLggpwDW8"
@@ -73,6 +74,7 @@ def uptime():
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
+
 
 
 
