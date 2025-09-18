@@ -8,8 +8,8 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev_secret")
 
 # 🔹 Telegram config
-TELEGRAM_TOKEN = "8286847352:AAFcoQWxJ1JBM-dOv_SBQOPxtMBLggpwDW8"
-CHAT_ID = "-4835473371"
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
+CHAT_ID = os.environ.get("CHAT_ID")
 
 def send_telegram_msg(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
@@ -74,6 +74,7 @@ def uptime():
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
+
 
 
 
